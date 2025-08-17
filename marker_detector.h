@@ -29,3 +29,4 @@ private:
 
     void drawDebugOutput(cv::Mat& image, const std::vector<cv::Point2f>& polygon) const;
 };
+int run_unit_tests();

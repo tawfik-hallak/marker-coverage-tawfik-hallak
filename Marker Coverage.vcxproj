@@ -24,6 +24,7 @@
     <ProjectGuid>{c18b9265-f9f4-4a05-8b67-98a30a9d6f0d}</ProjectGuid>
     <RootNamespace>MarkerCoverage</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MarkerCoverage</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,7 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Marker Coverage.cpp" />
+    <ClCompile Include="MarkerCoverage.cpp" />
+    <ClCompile Include="unit_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="marker_detector.h" />

@@ -2,29 +2,31 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include "marker_detector.h"
+#include <opencv2/core/utils/logger.hpp>
 
-int main() {
 
-    //std::cout << "Working dir: " << std::filesystem::current_path() << "\n";
-    cv::Mat img = cv::imread("test.png");
-    if (img.empty()) {
-        std::cerr << "Image not found!\n";
+int main(int argc, char** argv) {
+    cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_SILENT);
+
+    if (argc >= 2 && std::string(argv[1]) == "--test") {
+        return run_unit_tests();
+    }
+
+    if (argc < 2) {
+        std::cerr << "Usage: marker_coverage <image_path> [--debug]\n";
         return 1;
     }
-    
-    bool debugMode = false;
 
+    bool debugMode = (argc > 2 && std::string(argv[2]) == "--debug");
+
+    cv::Mat img = cv::imread(argv[1]);
     MarkerDetector detector;
     auto result = detector.detectAndComputeCoverage(img, debugMode);
 
-
     if (!result.found) {
-        std::cerr << "Marker not found.\n";
-        return 1;
+        return 1; // Marker not found
     }
 
-    std::cout << "waka waka: " << result.coveragePercent << "%\n";
-
-
+    std::cout << argv[1] << " " << result.coveragePercent << "%\n";
     return 0;
 }
