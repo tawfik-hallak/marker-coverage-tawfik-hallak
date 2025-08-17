@@ -26,33 +26,21 @@ masks and overlays. Fallback convex-hull detection is provided.
 
 
 
-\## Setup \& Build Instructions
+\### Windows (MSVC / Visual Studio)
+
+1\. Install \[OpenCV](https://opencv.org/) and ensure its `bin/` is on your PATH.
+
+2\. Clone this repository:
+
+&nbsp;  ```bash
+
+&nbsp;  git clone https://github.com/<your-username>/marker-coverage-<your-full-name>.git
+
+&nbsp;  cd marker-coverage-<your-full-name>
 
 
 
-\### Windows (Visual Studio / MSVC)
-
-```bash
-
-\# Install OpenCV (prebuilt or vcpkg)
-
-git clone https://github.com/opencv/opencv.git
-
-mkdir build \&\& cd build
-
-cmake -A x64 ..
-
-cmake --build . --config Release
-
-
-
-
-
-\#######################
-
-
-
-build on all platforms with:
+3\. Open in Visual Studio (with CMake integration enabled) or run:
 
 
 
@@ -60,9 +48,31 @@ mkdir build \&\& cd build
 
 cmake ..
 
-cmake --build .
+cmake --build . --config Release
 
-\####################
+
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
+
+pacman -S mingw-w64-x86\_64-gcc mingw-w64-x86\_64-cmake mingw-w64-x86\_64-opencv
+
+git clone https://github.com/<your-username>/marker-coverage-<your-full-name>.git
+
+cd marker-coverage-<your-full-name>
+
+mkdir build \&\& cd build
+
+cmake -G "MinGW Makefiles" ..
+
+mingw32-make
+
+
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
 
 macOS (clang + Homebrew):
 
@@ -76,7 +86,11 @@ cmake ..
 
 make
 
-\#####################
+
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
 
 Linux (Ubuntu/Debian):
 
@@ -90,7 +104,13 @@ cmake ..
 
 make
 
-\####################
+
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
+
+Usage Examples
 
 
 
@@ -104,13 +124,63 @@ marker02.jpg 12%
 
 
 
+Run in test mode:
+
+./marker\_coverage --test
 
 
 
+\[ OK ] EmptyImage
+
+\[ OK ] Synthetic3x3Marker
+
+Summary: 2 passed, 0 failed
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+Static Analysis
 
 
 
+You can run static analysis using tools like:
 
+
+
+Windows (MSVC)
+
+
+
+Run Code Analysis from Visual Studio (Analyze → Run Code Analysis).
+
+
+
+Linux/macOS
+
+clang-tidy src/\*.cpp -- -Iinclude -std=c++17
+
+cppcheck --enable=all --inconclusive --std=c++17 src/
+
+\#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+Dockerfile Usage:
+
+
+
+\# Build image
+
+docker build -t marker-coverage .
+
+
+
+\# Run in test mode
+
+docker run --rm marker-coverage
+
+
+
+\# Run on a real image (mount a host folder with images)
+
+docker run --rm -v $(pwd):/data marker-coverage ./build/marker\_coverage /data/test3.png
 
 
 
